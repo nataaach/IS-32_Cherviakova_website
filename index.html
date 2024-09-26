@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <header>
+    <header class="main-header">
         <nav>
             <ul>
                 <li><a href="index.html">Головна</a></li>
@@ -19,48 +19,51 @@
         </nav>
     </header>
 
-    <h1>Зоомагазин</h1>
-    <img src="./images/Буч.jpg" alt="Буч" width="500">
+    <h1 id="main-title">Зоомагазин</h1>
 
-    <h2>Пропозиції для вас</h2>
-    <table border="1" cellpadding="10" cellspacing="0">
-        <tr>
-            <th>Товар</th>
-            <th>Ціна, грн</th>
-            <th>Купити</th>
-        </tr>
-        <tr>
-            <td>Миска металева</td>
-            <td>149.00</td>
-            <td><button>Купити</button></td>
-        </tr>
-        <tr>
-            <td>Іграшка для собак</td>
-            <td>400.00</td>
-            <td><button>Купити</button></td>
-        </tr>
-        <tr>
-            <td>Вітаміни для собак</td>
-            <td>618.00</td>
-            <td><button>Купити</button></td>
-        </tr>
-    </table>
+    <div class="content-container">
+        <img src="./images/Буч.jpg" alt="Буч" width="300" class="product-image">
+        <p class="quote">Все для вашого улюбленця — з любов’ю і турботою!</p>
+    </div>
 
-    <h2>Послуги зоомагазину</h2>
+    <h2 class="section-title">Пропозиції для вас</h2>
+
+    <div class="products-container">
+        <div class="product-card">
+            <img src="./images/миска.png" alt="Миска металева" class="product-img">
+            <div class="product-title">Миска металева</div>
+            <div class="product-price">149.00 грн</div>
+            <button class="buy-button">Купити</button>
+        </div>
+        <div class="product-card">
+            <img src="./images/іграшка.png" alt="Іграшка для собак" class="product-img">
+            <div class="product-title">Іграшка для собак</div>
+            <div class="product-price">400.00 грн</div>
+            <button class="buy-button">Купити</button>
+        </div>
+        <div class="product-card">
+            <img src="./images/вітаміни.png" alt="Вітаміни для собак" class="product-img">
+            <div class="product-title">Вітаміни для собак</div>
+            <div class="product-price">618.00 грн</div>
+            <button class="buy-button">Купити</button>
+        </div>
+    </div>
+
+    <h2 class="section-title">Послуги зоомагазину</h2>
     <ul>
         <li>Великий вибір товарів для тварин</li>
         <li>Консультації ветеринарів</li>
         <li>Доставка по всій Україні</li>
     </ul>
 
-    <h2>Як зробити замовлення?</h2>
+    <h2 class="section-title">Як зробити замовлення?</h2>
     <ol>
         <li>Виберіть товар з каталогу</li>
         <li>Додайте товар у кошик</li>
         <li>Заповніть форму замовлення</li>
     </ol>
 
-    <h2>Форма замовлення</h2>
+    <h2 class="section-title">Форма замовлення</h2>
     <form action="/submit-order" method="post">
         <label for="name">Ім'я:</label><br>
         <input type="text" id="name" name="name"><br><br>
@@ -68,7 +71,7 @@
         <input type="tel" id="phone" name="phone"><br><br>
         <label for="address">Адреса доставки:</label><br>
         <input type="text" id="address" name="address"><br><br>
-        <input type="submit" value="Замовити">
+        <input type="submit" value="Замовити" class="submit-button">
     </form>
 
     <footer>
