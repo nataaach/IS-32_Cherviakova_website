@@ -1,4 +1,8 @@
 
+body {
+  background-color: #e1f5fe; 
+}
+
 nav ul {
   list-style: none;
   display: flex;
@@ -14,32 +18,23 @@ nav a {
   color: #593A28;
 }
 
-/* Загальний фон сторінки */
-body {
-  background-color: #e1f5fe; 
-}
-
-/* Вирівнювання заголовку "Зоомагазин" */
 #main-title {
   text-align: left;
   color: #2f4f4f; 
   margin-left: 20px; 
 }
 
-/* Стиль контейнера для фото і цитати */
 .content-container {
   display: flex;
   align-items: center;
   margin-left: 20px; 
 }
 
-/* Стиль для фотографії */
 .product-image {
   border-radius: 10px;
   margin-right: 20px; 
 }
 
-/* Стиль для цитати */
 .quote {
   font-size: 24px;
   color: #2f4f4f;
@@ -47,14 +42,12 @@ body {
   font-family: "Georgia", "Times New Roman", serif; 
 }
 
-/* Стиль для всіх заголовків секцій */
 .section-title {
   color: #2f4f4f; 
   text-align: left;
   margin-left: 20px; 
 }
 
-/* Стиль для контейнера товарів */
 .products-container {
   display: flex;
   flex-wrap: wrap; 
@@ -62,7 +55,6 @@ body {
   padding: 20px; 
 }
 
-/* Стиль для картки товару */
 .product-card {
   background-color: #B0C4DE; 
   border: 1px solid #bbb; 
@@ -71,16 +63,13 @@ body {
   text-align: center; 
   width: calc(30% - 20px); 
   margin-bottom: 20px; 
-  position: relative; 
 }
 
-/* Стиль для зображень товарів */
 .product-img {
   max-width: 100%; 
   border-radius: 10px; 
 }
 
-/* Стиль для назви товару */
 .product-title {
   font-size: 18px; 
   color: #333; 
@@ -88,15 +77,13 @@ body {
   font-family: "Courier New", Courier, monospace; 
 }
 
-/* Стиль для ціни */
 .product-price {
   font-family: "Courier New", Courier, monospace; 
   font-size: 18px;
   margin-bottom: 10px; 
 }
 
-/* Стиль для кнопки "Купити" */
-.buy-button {
+.buy-button, .submit-button {
   background-color: #6c757d; 
   color: white;
   padding: 10px 20px;
@@ -104,24 +91,92 @@ body {
   cursor: pointer;
 }
 
-.buy-button:hover {
+.buy-button:hover, .submit-button:hover {
   background-color: #5a6268; 
 }
 
-/* Темно-сірий колір для кнопки "Замовити" */
-.submit-button {
-  background-color: #6c757d; 
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
+@media only screen and (max-width: 992px) {
+  .products-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-card {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .content-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quote {
+    font-size: 20px;
+  }
+
+  .product-title {
+    font-size: 16px;
+  }
+
+  .product-price {
+    font-size: 16px;
+  }
 }
 
-.submit-button:hover {
-  background-color: #5a6268; 
+@media only screen and (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  nav li {
+    margin: 5px 0;
+  }
+
+  .products-container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .product-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .quote {
+    font-size: 18px;
+  }
+
+  .product-title {
+    font-size: 14px;
+  }
+
+  .product-price {
+    font-size: 14px;
+  }
+
+  .content-container {
+    margin-left: 0;
+    padding: 10px;
+    flex-direction: column;
+  }
 }
 
-/* Дочірній селектор для заголовків всередині секцій */
-.section-title + ul {
-  margin-top: 10px; 
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+  .product-card {
+    width: calc(50% - 10px); 
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  body {
+    background-color: #ffffff; 
+  }
+  
+  nav ul {
+    flex-direction: column; 
+  }
 }
