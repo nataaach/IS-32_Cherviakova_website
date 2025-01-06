@@ -5,6 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Зоомагазин</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        const cart = [];
+
+        // Додати товар до кошика
+        function addToCart(productName, price) {
+            cart.push({ productName, price });
+            showModal(`${productName} додано в кошик!`);
+            updateCartCounter();
+        }
+
+        // Оновити лічильник товарів у кошику
+        function updateCartCounter() {
+            document.getElementById('cart-counter').textContent = cart.length;
+        }
+
+        // Показати модальне вікно
+        function showModal(message) {
+            const modal = document.getElementById('modal');
+            document.getElementById('modal-message').textContent = message;
+            modal.style.display = 'block';
+        }
+
+        // Закрити модальне вікно
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Пошук товарів
+        function searchProducts() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                const title = product.querySelector('.product-title').textContent.toLowerCase();
+                product.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        // Фільтрування товарів
+        function filterByCategory() {
+            const category = document.getElementById('category-filter').value;
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                const productCategory = product.dataset.category; // додано атрибут data-category
+                product.style.display = category === 'all' || productCategory === category ? 'block' : 'none';
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -17,6 +64,9 @@
                 <li><a href="contact.html">Контакти</a></li>
             </ul>
         </nav>
+        <div id="cart-indicator">
+            <a href="cart.html">Кошик (<span id="cart-counter">0</span>)</a>
+        </div>
     </header>
 
     <h1 id="main-title">Зоомагазин</h1>
@@ -26,26 +76,36 @@
         <p class="quote">Все для вашого улюбленця — з любов’ю і турботою!</p>
     </div>
 
+    <div class="search-filter-container">
+        <input type="text" id="search-bar" placeholder="Пошук товарів..." onkeyup="searchProducts()">
+        <select id="category-filter" onchange="filterByCategory()">
+            <option value="all">Усі категорії</option>
+            <option value="миски">Миски</option>
+            <option value="іграшки">Іграшки</option>
+            <option value="вітаміни">Вітаміни</option>
+        </select>
+    </div>
+
     <h2 class="section-title">Пропозиції для вас</h2>
 
     <div class="products-container">
-        <div class="product-card">
+        <div class="product-card" data-category="миски">
             <img src="./images/миска.png" alt="Миска металева" class="product-img">
             <div class="product-title">Миска металева</div>
             <div class="product-price">149.00 грн</div>
-            <button class="buy-button">Купити</button>
+            <button class="buy-button" onclick="addToCart('Миска металева', 149)">Купити</button>
         </div>
-        <div class="product-card">
+        <div class="product-card" data-category="іграшки">
             <img src="./images/іграшка.png" alt="Іграшка для собак" class="product-img">
             <div class="product-title">Іграшка для собак</div>
             <div class="product-price">400.00 грн</div>
-            <button class="buy-button">Купити</button>
+            <button class="buy-button" onclick="addToCart('Іграшка для собак', 400)">Купити</button>
         </div>
-        <div class="product-card">
+        <div class="product-card" data-category="вітаміни">
             <img src="./images/вітаміни.png" alt="Вітаміни для собак" class="product-img">
             <div class="product-title">Вітаміни для собак</div>
             <div class="product-price">618.00 грн</div>
-            <button class="buy-button">Купити</button>
+            <button class="buy-button" onclick="addToCart('Вітаміни для собак', 618)">Купити</button>
         </div>
     </div>
 
@@ -55,13 +115,6 @@
         <li>Консультації ветеринарів</li>
         <li>Доставка по всій Україні</li>
     </ul>
-
-    <h2 class="section-title">Як зробити замовлення?</h2>
-    <ol>
-        <li>Виберіть товар з каталогу</li>
-        <li>Додайте товар у кошик</li>
-        <li>Заповніть форму замовлення</li>
-    </ol>
 
     <h2 class="section-title">Форма замовлення</h2>
     <form action="/submit-order" method="post">
@@ -73,6 +126,13 @@
         <input type="text" id="address" name="address"><br><br>
         <input type="submit" value="Замовити" class="submit-button">
     </form>
+
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p id="modal-message"></p>
+            <button onclick="closeModal()">Закрити</button>
+        </div>
+    </div>
 
     <footer>
         <p>Зв'язатися з нами: <a href="tel:+0996789546">+0996789546</a></p>
