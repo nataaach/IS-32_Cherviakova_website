@@ -5,57 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Зоомагазин</title>
     <link rel="stylesheet" href="style.css">
-    <script>
-        const cart = [];
-
-        // Додати товар до кошика
-        function addToCart(productName, price) {
-            cart.push({ productName, price });
-            showModal(`${productName} додано в кошик!`);
-            updateCartCounter();
+    <style>
+        /* Основні стилі */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            background-color: #00aaff; /* Блакитний колір */
+            padding: 15px;
+            color: white;
+            text-align: center;
+        }
+        .buy-button {
+            background-color: #00aaff; /* Блакитний колір */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .buy-button:hover {
+            background-color: #008ecc;
+        }
+        #cart-indicator {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background-color: #00aaff;
+            color: white;
+            padding: 10px;
+            border-radius: 20px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        #cart-indicator:hover {
+            background-color: #008ecc;
         }
 
-        // Оновити лічильник товарів у кошику
-        function updateCartCounter() {
-            document.getElementById('cart-counter').textContent = cart.length;
+        /* Стилізація модального вікна */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
-
-        // Показати модальне вікно
-        function showModal(message) {
-            const modal = document.getElementById('modal');
-            document.getElementById('modal-message').textContent = message;
-            modal.style.display = 'block';
+        .modal.show {
+            opacity: 1;
+            pointer-events: auto;
         }
-
-        // Закрити модальне вікно
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 500px;
         }
-
-        // Пошук товарів
-        function searchProducts() {
-            const query = document.getElementById('search-bar').value.toLowerCase();
-            const products = document.querySelectorAll('.product-card');
-            products.forEach(product => {
-                const title = product.querySelector('.product-title').textContent.toLowerCase();
-                product.style.display = title.includes(query) ? 'block' : 'none';
-            });
+        .modal-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
         }
-
-        // Фільтрування товарів
-        function filterByCategory() {
-            const category = document.getElementById('category-filter').value;
-            const products = document.querySelectorAll('.product-card');
-            products.forEach(product => {
-                const productCategory = product.dataset.category; // додано атрибут data-category
-                product.style.display = category === 'all' || productCategory === category ? 'block' : 'none';
-            });
+        .modal-content button {
+            background-color: #00aaff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-    </script>
+        .modal-content button:hover {
+            background-color: #008ecc;
+        }
+        .product-card {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .product-title {
+            font-weight: bold;
+        }
+        .cart-details {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 
     <header class="main-header">
+        <h1>Зоомагазин</h1>
+        <div id="cart-indicator" onclick="viewCart()">Кошик: <span id="cart-counter">0</span> товарів</div>
         <nav>
             <ul>
                 <li><a href="index.html">Головна</a></li>
@@ -64,9 +118,6 @@
                 <li><a href="contact.html">Контакти</a></li>
             </ul>
         </nav>
-        <div id="cart-indicator">
-            <a href="cart.html">Кошик (<span id="cart-counter">0</span>)</a>
-        </div>
     </header>
 
     <h1 id="main-title">Зоомагазин</h1>
@@ -76,32 +127,22 @@
         <p class="quote">Все для вашого улюбленця — з любов’ю і турботою!</p>
     </div>
 
-    <div class="search-filter-container">
-        <input type="text" id="search-bar" placeholder="Пошук товарів..." onkeyup="searchProducts()">
-        <select id="category-filter" onchange="filterByCategory()">
-            <option value="all">Усі категорії</option>
-            <option value="миски">Миски</option>
-            <option value="іграшки">Іграшки</option>
-            <option value="вітаміни">Вітаміни</option>
-        </select>
-    </div>
-
     <h2 class="section-title">Пропозиції для вас</h2>
 
     <div class="products-container">
-        <div class="product-card" data-category="миски">
+        <div class="product-card">
             <img src="./images/миска.png" alt="Миска металева" class="product-img">
             <div class="product-title">Миска металева</div>
             <div class="product-price">149.00 грн</div>
             <button class="buy-button" onclick="addToCart('Миска металева', 149)">Купити</button>
         </div>
-        <div class="product-card" data-category="іграшки">
+        <div class="product-card">
             <img src="./images/іграшка.png" alt="Іграшка для собак" class="product-img">
             <div class="product-title">Іграшка для собак</div>
             <div class="product-price">400.00 грн</div>
             <button class="buy-button" onclick="addToCart('Іграшка для собак', 400)">Купити</button>
         </div>
-        <div class="product-card" data-category="вітаміни">
+        <div class="product-card">
             <img src="./images/вітаміни.png" alt="Вітаміни для собак" class="product-img">
             <div class="product-title">Вітаміни для собак</div>
             <div class="product-price">618.00 грн</div>
@@ -109,27 +150,11 @@
         </div>
     </div>
 
-    <h2 class="section-title">Послуги зоомагазину</h2>
-    <ul>
-        <li>Великий вибір товарів для тварин</li>
-        <li>Консультації ветеринарів</li>
-        <li>Доставка по всій Україні</li>
-    </ul>
-
-    <h2 class="section-title">Форма замовлення</h2>
-    <form action="/submit-order" method="post">
-        <label for="name">Ім'я:</label><br>
-        <input type="text" id="name" name="name"><br><br>
-        <label for="phone">Телефон:</label><br>
-        <input type="tel" id="phone" name="phone"><br><br>
-        <label for="address">Адреса доставки:</label><br>
-        <input type="text" id="address" name="address"><br><br>
-        <input type="submit" value="Замовити" class="submit-button">
-    </form>
-
-    <div id="modal" class="modal" style="display: none;">
+    <!-- Модальне вікно -->
+    <div id="modal" class="modal">
         <div class="modal-content">
             <p id="modal-message"></p>
+            <div id="cart-items" class="cart-details"></div>
             <button onclick="closeModal()">Закрити</button>
         </div>
     </div>
@@ -138,7 +163,67 @@
         <p>Зв'язатися з нами: <a href="tel:+0996789546">+0996789546</a></p>
         <p>Наш Telegram: <a href="https://t.me/zooshop">t.me/zooshop</a></p>
     </footer>
-    <h3><a href="description.html">Опис предметної галузі</a></h3>
+
+    <script>
+        const cart = [];
+
+        // Додати товар до кошика
+        function addToCart(productName, price) {
+            // Додати товар у кошик
+            cart.push({ productName, price });
+
+            // Оновити кількість товарів у кошику
+            updateCartCounter();
+
+            // Показати повідомлення у модальному вікні
+            showModal(${productName} додано у кошик!);
+        }
+
+        // Оновити лічильник товарів у кошику
+        function updateCartCounter() {
+            document.getElementById('cart-counter').textContent = cart.length;
+        }
+
+        // Переглянути кошик
+        function viewCart() {
+            const modal = document.getElementById('modal');
+            const cartItems = document.getElementById('cart-items');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = "<p>Кошик порожній!</p>";
+            } else {
+                let itemsHTML = "<h3>Ваші товари:</h3><ul>";
+                let totalPrice = 0;
+
+                cart.forEach((item) => {
+                    itemsHTML += <li>${item.productName} - ${item.price} грн</li>;
+                    totalPrice += item.price;
+                });
+
+                itemsHTML += </ul><p><strong>Загальна сума:</strong> ${totalPrice} грн</p>;
+                cartItems.innerHTML = itemsHTML;
+            }
+
+            modal.classList.add('show');
+        }
+
+        // Показати модальне вікно
+        function showModal(message) {
+            const modal = document.getElementById('modal');
+            document.getElementById('modal-message').textContent = message;
+            modal.classList.add('show');
+
+            // Закрити модальне вікно через 2 секунди, якщо це не кошик
+            if (message.includes('додано у кошик')) {
+                setTimeout(closeModal, 2000);
+            }
+        }
+
+        // Закрити модальне вікно
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+    </script>
 
 </body>
-</html>
+</html> 
